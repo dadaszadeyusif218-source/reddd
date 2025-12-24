@@ -1,0 +1,27 @@
+.pad1 {
+/*border-style:solid;
+border-color:blue;
+border-width: 5px; */
+border:5px solid blue;
+padding: 40px;
+background-color: blueviolet;
+color:cornsilk;
+}
+.pad2 {
+/*border-style:solid;
+border-color:white;
+border-width:10px;*/
+border:10px solid white;
+padding: 20px;
+background-color: crimson;
+color: darkviolet;
+}
+.pad3{
+/*border-style:solid;
+border-color:crimson;
+border-width:20px;*/
+border:20px solid  crimson;
+padding: 10px;
+background-color:bisque;
+color:cornsilk;
+}
