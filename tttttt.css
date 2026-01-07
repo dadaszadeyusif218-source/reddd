@@ -1,0 +1,12 @@
+.text {
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 3em;
+    font-weight: lighter;
+}
+
+.box {
+    width: 200px;
+    height: 100px;
+    background-color: steelblue;
+    box-shadow: 10px 10px 8px black;
+}
