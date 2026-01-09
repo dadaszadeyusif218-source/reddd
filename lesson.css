@@ -1,0 +1,17 @@
+table,
+th,
+td {
+border: 1px solid burlywood;
+border-collapse: collapse;
+padding:4px;
+}
+table{
+width: 70px;
+}
+
+th{
+    background-color: blue;
+}
+th:hover {
+background-color: rgb(163, 127,133);
+}

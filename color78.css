@@ -1,0 +1,10 @@
+ul {
+/*disc ,circle,square none */
+list-style-type:square;
+background-color: blanchedalmond;
+}
+ol{
+list-style-type: upper-roman;
+background-color: chartreuse;
+/*list-style-image : url(); */
+}
