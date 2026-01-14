@@ -1,0 +1,9 @@
+.menu li {
+display:inline; 
+border:3px solid red;
+padding: 6px;
+margin-right: 6px; 
+color: rgb(red, green, blue)
+}
+
+
