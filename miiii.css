@@ -1,0 +1,29 @@
+* {
+  margin: 0;
+}
+
+body {
+  background-color: lightcyan;
+}
+
+.menu li {
+  list-style-type: none;
+  display: inline;
+  margin-left: 50px;
+  color: black;
+  font-size: 25px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  cursor: pointer;
+  box-shadow: 1px 1px 5px black;
+  border: 2px;
+}
+
+.menu {
+  width: 100%;
+  background-color: azure;
+  padding: 20px;
+  margin-top: 0;
+  text-align: center;
+  box-shadow: 1px 1px 5px black;
+  position: fixed;
+}
