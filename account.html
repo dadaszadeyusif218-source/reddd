@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Account</title>
+  <link rel="stylesheet" href="script.css"> 
+  <link rel="stylesheet" href="account.css">
+  <link rel="stylesheet" href="auth.css">
+</head>
+<body>
+  <main class="account">
+    <h1>My Account</h1>
+<a href="index.html" class="nav_link">главная</a>
+                <a href="catalog.html" class="nav_link">каталог</a>
+                 <a href="login.html" class="nav_link">войти повторно</a>
+             <a href="register.html" class="nav_link">войти </a>
+    <div id="loader" class="loader"></div>
+
+    <div id="content" class="hidden">
+      <p><b>Имя:</b> <span id="name"></span></p>
+      <p><b>Email:</b> <span id="email"></span></p>
+    </div>
+
+    <div id="error" class="error hidden">
+      <p id="error-text"></p>
+      <button id="retry">Повторить</button>
+    </div>
+
+    <button id="logout" class="logout">Logout</button>
+  </main>
+
+  <script src="script.js"></script> 
+  <body data-protected>
+
+  <h1>Привет, <span data-user-name></span>!</h1>
+  <p>Email: <span data-user-email></span></p>
+  <button id="logoutBtn">Выйти</button>
+
+  
+</body>
+</body>
+</html>

@@ -1,0 +1,388 @@
+
+/* =========================================
+   AUTH — MIRROR GLASS EDITION
+========================================= */
+
+.auth {
+    min-height: calc(100vh - 68px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 55px 20px;
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    background:
+        radial-gradient(ellipse at 15% 20%, #b8a4ff30, transparent 40%),
+        radial-gradient(ellipse at 85% 75%, #c9c5ff35, transparent 42%);
+}
+
+/* Световые отражения */
+.auth::before,
+.auth::after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    pointer-events: none;
+    border-radius: 50%;
+    filter: blur(2px);
+}
+
+.auth::before {
+    width: 330px;
+    height: 330px;
+    top: -100px;
+    right: -60px;
+    background: radial-gradient(
+        circle at 35% 35%,
+        #ffffffd9 0%,
+        #c8baff65 25%,
+        #6848d825 55%,
+        transparent 72%
+    );
+    animation: mirrorFloat 9s ease-in-out infinite alternate;
+}
+
+.auth::after {
+    width: 280px;
+    height: 280px;
+    left: -90px;
+    bottom: -80px;
+    background: radial-gradient(
+        circle at 60% 40%,
+        #ffffffc9 0%,
+        #d8d0ff80 30%,
+        #6848d820 60%,
+        transparent 75%
+    );
+    animation: mirrorFloat 11s ease-in-out infinite alternate-reverse;
+}
+
+/* Стеклянная форма */
+.form {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    width: 100%;
+    max-width: 430px;
+    padding: 42px 36px 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+
+    background: linear-gradient(
+        135deg,
+        rgba(255,255,255,.92),
+        rgba(250,248,255,.72) 45%,
+        rgba(235,230,255,.65)
+    );
+
+    border: 1px solid rgba(255,255,255,.95);
+    border-radius: 22px;
+
+    box-shadow:
+        0 25px 70px rgba(49,32,105,.12),
+        0 5px 18px rgba(104,72,216,.07),
+        inset 0 1px 0 #ffffff,
+        inset 0 -1px 0 rgba(104,72,216,.08);
+
+    backdrop-filter: blur(24px) saturate(145%);
+    -webkit-backdrop-filter: blur(24px) saturate(145%);
+
+    animation: authAppear .7s cubic-bezier(.2,.8,.2,1) both;
+    transition: box-shadow .35s ease, border-color .35s ease;
+}
+
+/* Движущийся зеркальный блик */
+.form::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    top: -70%;
+    left: -100%;
+    width: 65%;
+    height: 240%;
+    pointer-events: none;
+
+    background: linear-gradient(
+        105deg,
+        transparent 20%,
+        rgba(255,255,255,.12) 38%,
+        rgba(255,255,255,.85) 49%,
+        rgba(255,255,255,.22) 57%,
+        transparent 75%
+    );
+
+    transform: rotate(16deg);
+    animation: mirrorSweep 8s ease-in-out infinite;
+}
+
+.form:hover {
+    border-color: rgba(255,255,255,1);
+    box-shadow:
+        0 30px 85px rgba(49,32,105,.16),
+        0 0 35px rgba(148,119,255,.13),
+        inset 0 1px 0 #fff;
+}
+
+/* Заголовок */
+.form h1 {
+    margin-bottom: 25px;
+    padding-bottom: 20px;
+    color: #21183a;
+    border-bottom: 1px solid rgba(104,72,216,.15);
+    font-size: clamp(30px, 7vw, 40px);
+    font-weight: 750;
+    line-height: 1.15;
+    letter-spacing: -1.5px;
+    text-shadow: 0 1px 0 #fff;
+}
+
+/* Поля ввода */
+.form input {
+    width: 100%;
+    margin-bottom: 13px;
+    padding: 14px 15px;
+
+    color: #21183a;
+    background: linear-gradient(
+        135deg,
+        rgba(255,255,255,.88),
+        rgba(247,244,255,.68)
+    );
+
+    border: 1px solid rgba(150,132,202,.25);
+    border-radius: 11px;
+    outline: none;
+
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+
+    box-shadow:
+        inset 0 1px 2px rgba(50,30,100,.025),
+        0 1px 0 rgba(255,255,255,.9);
+
+    transition:
+        border-color .25s ease,
+        box-shadow .25s ease,
+        background .25s ease,
+        transform .25s ease;
+}
+
+.form input::placeholder {
+    color: #89819d;
+}
+
+.form input:hover {
+    border-color: rgba(104,72,216,.45);
+    background: #fff;
+}
+
+.form input:focus {
+    background: #fff;
+    border-color: #8060e5;
+    box-shadow:
+        0 0 0 4px rgba(104,72,216,.10),
+        0 4px 14px rgba(104,72,216,.07),
+        inset 0 1px 0 #fff;
+    transform: translateY(-1px);
+}
+
+/* Автозаполнение Chrome */
+.form input:-webkit-autofill {
+    -webkit-text-fill-color: #21183a;
+    box-shadow: inset 0 0 0 100px #f9f7ff;
+}
+
+.form input:-webkit-autofill:focus {
+    -webkit-text-fill-color: #21183a;
+    box-shadow:
+        inset 0 0 0 100px #fff,
+        0 0 0 4px rgba(104,72,216,.10);
+}
+
+/* Глянцевая кнопка */
+.form button {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+
+    margin-top: 12px;
+    padding: 15px 20px;
+
+    color: #fff;
+    background: linear-gradient(
+        115deg,
+        #5433c4 0%,
+        #7955e8 48%,
+        #9b82ff 100%
+    );
+
+    border: 1px solid rgba(255,255,255,.45);
+    border-radius: 11px;
+
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: .3px;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 8px 22px rgba(104,72,216,.28),
+        inset 0 1px 0 rgba(255,255,255,.5),
+        inset 0 -2px 0 rgba(42,20,110,.12);
+
+    transition:
+        transform .25s ease,
+        box-shadow .25s ease,
+        filter .25s ease;
+}
+
+/* Блик на кнопке */
+.form button::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    left: -120%;
+    width: 75%;
+    height: 100%;
+
+    background: linear-gradient(
+        110deg,
+        transparent,
+        rgba(255,255,255,.5),
+        transparent
+    );
+
+    transform: skewX(-20deg);
+    transition: left .65s ease;
+}
+
+.form button:hover::before {
+    left: 150%;
+}
+
+.form button:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.06);
+    box-shadow:
+        0 13px 30px rgba(104,72,216,.34),
+        inset 0 1px 0 rgba(255,255,255,.65);
+}
+
+.form button:active {
+    transform: scale(.985);
+    box-shadow: 0 4px 12px rgba(104,72,216,.2);
+}
+
+.form button:focus-visible {
+    outline: 3px solid #b9a9fa;
+    outline-offset: 4px;
+}
+
+/* Нижний текст */
+.form p {
+    margin-top: 23px;
+    padding-top: 19px;
+    color: #777087;
+    border-top: 1px solid rgba(104,72,216,.14);
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+.form p a {
+    color: #6848d8;
+    font-weight: 700;
+    text-decoration: none;
+    transition: color .2s ease;
+}
+
+.form p a:hover {
+    color: #4525ad;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+}
+
+.form p a:focus-visible {
+    outline: 2px solid #6848d8;
+    outline-offset: 3px;
+}
+
+/* Анимации */
+@keyframes authAppear {
+    from {
+        opacity: 0;
+        transform: translateY(22px) scale(.97);
+        filter: blur(5px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        filter: blur(0);
+    }
+}
+
+@keyframes mirrorSweep {
+    0%, 15% {
+        left: -100%;
+    }
+    55%, 100% {
+        left: 150%;
+    }
+}
+
+@keyframes mirrorFloat {
+    from {
+        transform: translate3d(0, 0, 0) scale(1);
+    }
+    to {
+        transform: translate3d(-18px, 20px, 0) scale(1.08);
+    }
+}
+
+/* Телефоны */
+@media (max-width: 480px) {
+    .auth {
+        min-height: calc(100vh - 65px);
+        align-items: flex-start;
+        padding: 30px 16px;
+    }
+
+    .form {
+        padding: 30px 22px 24px;
+        border-radius: 18px;
+    }
+
+    .form h1 {
+        font-size: 32px;
+        margin-bottom: 20px;
+    }
+
+    .form input {
+        padding: 13px;
+    }
+
+    .form button {
+        padding: 14px;
+    }
+}
+
+/* Уважение к настройке уменьшения движения */
+@media (prefers-reduced-motion: reduce) {
+    .auth::before,
+    .auth::after,
+    .form,
+    .form::before {
+        animation: none;
+    }
+
+    .form,
+    .form input,
+    .form button,
+    .form button::before,
+    .form p a {
+        transition: none;
+    }
+}

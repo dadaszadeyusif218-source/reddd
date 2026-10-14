@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Главная</title>
+    <link rel="stylesheet" href="script.css">
+</head>
+
+<body>
+
+<header class="header">
+    <div class="container header__inner">
+
+        <a href="index.html" class="logo">LOGO</a>
+
+        <nav class="nav">
+            <a href="index.html" class="nav__link">Главная</a>
+            <a href="catalog.html" class="nav__link">Каталог</a>
+            <a href="login.html" class="nav_link">регестрация</a>
+             <a href="register.html" class="nav_link">войти</a>
+        </nav>
+
+        <div class="header__action">
+            <a href="#cart" class="cart-link">Корзина</a>
+        </div>
+
+    </div>
+</header>
+
+<main>
+
+    <section class="hero">
+        <div class="container">
+            <a href="#catalog" class="btn">Смотреть товары</a>
+            <br>
+        </div>
+    </section>
+
+    <section class="section" id="catalog">
+        <h1>Самые популярные товары</h1>
+
+        <div class="container">
+            <div class="products" id="products">
+
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<footer class="footer" id="login">
+    <div class="container">
+        <p>© 2026. Все права защищены.</p>
+    </div>
+</footer>
+
+<script src="script.js"></script>
+<img class="product_img" src="${product.imageUr}" alt="">
+<h1>${product.brand} ${product.brand}</h1>
+</body>
+</html>
