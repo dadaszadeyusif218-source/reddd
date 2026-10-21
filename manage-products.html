@@ -1,0 +1,67 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Управление товарами — LOGO STORE</title>
+    <link rel="stylesheet" href="script.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container header_inner">
+            <a class="logo" href="index.html">LOGO STORE</a>
+            <nav class="nav">
+                <a class="nav_link" href="index.html">Главная</a>
+                <a class="nav_link" href="catalog.html">Каталог</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container" style="padding:30px 0 60px">
+        <section class="panel" style="padding:25px">
+            <h1 style="font-size:32px">Управление товарами</h1>
+            <p class="muted" style="margin:12px 0 24px">
+                Добавляй товары и редактируй каталог.
+            </p>
+
+            <form id="productForm" style="display:grid;gap:12px">
+                <input type="hidden" id="editId">
+
+                <label for="brand">Бренд</label>
+                <input id="brand" placeholder="Например, ASUS" required>
+
+                <label for="model">Название товара</label>
+                <input id="model" placeholder="Например, ROG Strix" required>
+
+                <label for="price">Цена ($)</label>
+                <input id="price" type="number" min="0" step="0.01"
+                       placeholder="999.99" required>
+
+                <label for="imageUrl">Ссылка на изображение</label>
+                <input id="imageUrl" type="url"
+                       placeholder="https://example.com/image.jpg">
+
+                <label for="description">Описание</label>
+                <textarea id="description" maxlength="3000"
+                          placeholder="Описание товара..."></textarea>
+
+                <div style="display:flex;gap:10px;flex-wrap:wrap">
+                    <button type="submit" id="saveButton">Добавить товар</button>
+                    <button type="button" id="cancelButton"
+                            class="secondary-btn">Отмена</button>
+                </div>
+            </form>
+        </section>
+
+        <section style="margin-top:35px">
+            <h2 style="margin-bottom:20px">Мои товары</h2>
+            <div id="manageList" class="product-list">
+                <p>Загрузка товаров...</p>
+            </div>
+        </section>
+    </main>
+
+    <script src="manage-products.js"></script>
+</body>
+</html>

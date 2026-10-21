@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Главная</title>
     <link rel="stylesheet" href="script.css">
+    <link rel="stylesheet" href="cotalog.css">
 </head>
 
 <body>
@@ -20,6 +21,9 @@
             <a href="catalog.html" class="nav__link">Каталог</a>
             <a href="login.html" class="nav_link">регестрация</a>
              <a href="register.html" class="nav_link">войти</a>
+             <a href="manage-products.html" class="nav_link">
+    Управление товарами
+</a>
         </nav>
 
         <div class="header__action">
@@ -40,7 +44,57 @@
 
     <section class="section" id="catalog">
         <h1>Самые популярные товары</h1>
+<!-- Фильтры каталога -->
+<section class="catalog-filters">
+    <div class="filter-heading">
+        <div>
+            <span class="filter-label">КАТАЛОГ</span>
+            <h2>Найди свой товар</h2>
+        </div>
+        <button type="button" id="resetFilters" class="reset-filter">
+            Сбросить
+        </button>
+    </div>
 
+    <div class="filter-controls">
+        <input
+            type="search"
+            id="filterSearch"
+            placeholder="🔎 Поиск товара..."
+        >
+
+        <select id="filterCategory">
+            <option value="">Все категории</option>
+            <option value="computer">Компьютеры</option>
+            <option value="phone">Телефоны</option>
+            <option value="accessory">Аксессуары</option>
+        </select>
+
+        <div class="price-filter">
+            <input
+                type="number"
+                id="minPrice"
+                placeholder="Цена от"
+                min="0"
+            >
+            <input
+                type="number"
+                id="maxPrice"
+                placeholder="Цена до"
+                min="0"
+            >
+        </div>
+
+        <select id="sortProducts">
+            <option value="">Сначала обычные</option>
+            <option value="cheap">Сначала дешевле</option>
+            <option value="expensive">Сначала дороже</option>
+            <option value="name">По названию</option>
+        </select>
+    </div>
+
+    <p id="filterCount" class="filter-count">Все товары</p>
+</section>
         <div class="container">
             <div class="products" id="products">
 
@@ -58,6 +112,6 @@
 
 <script src="script.js"></script>
 <img class="product_img" src="${product.imageUr}" alt="">
-<h1>${product.brand} ${product.brand}</h1>
+<h1></h1>
 </body>
 </html>

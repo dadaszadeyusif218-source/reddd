@@ -1,50 +1,261 @@
-* { box-sizing: border-box; }
-
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #f4f5f7;
+* {
+    box-sizing: border-box;
 }
 
-.account {
-  max-width: 400px;
-  margin: 60px auto;
-  padding: 24px;
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  text-align: center;
+.account-page {
+    min-height: 100vh;
+    margin: 0;
+    padding: 32px 16px;
+    display: grid;
+    place-items: center;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #21183a;
+    background:
+        radial-gradient(ellipse at 12% 18%, rgba(184, 164, 255, .34), transparent 38%),
+        radial-gradient(ellipse at 88% 78%, rgba(201, 197, 255, .4), transparent 42%),
+        linear-gradient(135deg, #f8f7fc, #f0eef8);
 }
 
-.hidden { display: none; }
-
-.loader {
-  width: 36px;
-  height: 36px;
-  margin: 20px auto;
-  border: 4px solid #ddd;
-  border-top-color: #3b82f6;
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
+.account-page .account {
+    width: min(100%, 520px);
+    margin: 0 auto;
+    padding: 34px clamp(20px, 5vw, 38px);
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, .96);
+    border-radius: 24px;
+    background: linear-gradient(
+        140deg,
+        rgba(255, 255, 255, .94),
+        rgba(248, 246, 255, .78)
+    );
+    box-shadow:
+        0 28px 80px rgba(49, 32, 105, .14),
+        0 6px 20px rgba(104, 72, 216, .08),
+        inset 0 1px 0 #fff;
+    backdrop-filter: blur(22px) saturate(145%);
+    -webkit-backdrop-filter: blur(22px) saturate(145%);
+    text-align: center;
+    animation: accountAppear .65s cubic-bezier(.2, .8, .2, 1) both;
 }
 
-@keyframes spin { to { transform: rotate(360deg); } }
-
-.error { color: #dc2626; }
-
-button {
-  padding: 10px 20px;
-  border: none;
-  border-radius: 8px;
-  background: #3b82f6;
-  color: #fff;
-  font-size: 16px;
-  cursor: pointer;
+.account-page .account::before {
+    content: "";
+    position: absolute;
+    top: -100px;
+    right: -85px;
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    pointer-events: none;
+    background: radial-gradient(
+        circle,
+        rgba(255, 255, 255, .95),
+        rgba(192, 177, 255, .25) 50%,
+        transparent 72%
+    );
 }
 
-button:hover { opacity: 0.9; }
+.account-logo {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 18px;
+    color: #6848d8;
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 3px;
+    text-decoration: none;
+}
 
-.logout {
-  margin-top: 24px;
-  background: #ef4444;
+.account-page .account h1 {
+    position: relative;
+    margin: 0;
+    font-size: clamp(28px, 5vw, 36px);
+    letter-spacing: -1px;
+}
+
+.account-subtitle {
+    margin: 10px 0 23px;
+    color: #777087;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.account-nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 9px;
+    margin: 0 0 24px;
+}
+
+.account-nav a {
+    padding: 9px 12px;
+    color: #5f4ca4;
+    background: rgba(255, 255, 255, .72);
+    border: 1px solid rgba(104, 72, 216, .14);
+    border-radius: 999px;
+    font-size: 13px;
+    text-decoration: none;
+    transition:
+        transform .2s ease,
+        background .2s ease,
+        box-shadow .2s ease;
+}
+
+.account-nav a:hover {
+    transform: translateY(-2px);
+    background: #fff;
+    box-shadow: 0 6px 16px rgba(104, 72, 216, .12);
+}
+
+.profile-info {
+    position: relative;
+    padding: 7px 18px;
+    text-align: left;
+    border: 1px solid rgba(104, 72, 216, .13);
+    border-radius: 16px;
+    background: rgba(255, 255, 255, .58);
+}
+
+.profile-info p {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 8px 16px;
+    margin: 0;
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(104, 72, 216, .1);
+    line-height: 1.45;
+    overflow-wrap: anywhere;
+}
+
+.profile-info p:last-child {
+    border-bottom: 0;
+}
+
+.profile-info b {
+    color: #5c5275;
+}
+
+.profile-info span {
+    max-width: 100%;
+    color: #21183a;
+    text-align: right;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.account-page .loader {
+    width: 38px;
+    height: 38px;
+    margin: 28px auto;
+    border: 4px solid rgba(104, 72, 216, .14);
+    border-top-color: #6848d8;
+    border-radius: 50%;
+    animation: accountSpin .8s linear infinite;
+}
+
+.error {
+    position: relative;
+    padding: 15px;
+    border: 1px solid rgba(220, 38, 38, .18);
+    border-radius: 14px;
+    color: #b91c1c;
+    background: rgba(254, 242, 242, .86);
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.account-page button {
+    border: 0;
+    border-radius: 11px;
+    font: inherit;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition:
+        transform .2s ease,
+        box-shadow .2s ease,
+        filter .2s ease;
+}
+
+.retry-button {
+    margin-top: 8px;
+    padding: 11px 17px;
+    color: #fff;
+    background: linear-gradient(115deg, #5433c4, #9276f5);
+    box-shadow: 0 7px 18px rgba(104, 72, 216, .2);
+}
+
+.account-page .logout {
+    width: 100%;
+    margin-top: 22px;
+    padding: 13px 18px;
+    color: #fff;
+    background: linear-gradient(115deg, #c93649, #ef6573);
+    box-shadow: 0 8px 20px rgba(220, 38, 38, .16);
+}
+
+.account-page button:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.04);
+}
+
+.account-page button:active {
+    transform: scale(.985);
+}
+
+.account-page button:focus-visible,
+.account-nav a:focus-visible {
+    outline: 3px solid #b9a9fa;
+    outline-offset: 3px;
+}
+
+@keyframes accountSpin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes accountAppear {
+    from {
+        opacity: 0;
+        transform: translateY(16px) scale(.985);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@media (max-width: 480px) {
+    .account-page {
+        padding: 18px 12px;
+    }
+
+    .account-page .account {
+        padding: 27px 18px;
+        border-radius: 20px;
+    }
+
+    .profile-info {
+        padding-right: 13px;
+        padding-left: 13px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .account-page .account,
+    .account-page .loader {
+        animation: none;
+    }
+
+    .account-nav a,
+    .account-page button {
+        transition: none;
+    }
 }

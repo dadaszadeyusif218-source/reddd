@@ -73,3 +73,86 @@ function filterByCategory(categoryId){
 function openProduct(id){
 location.href="product.html?id=" +id;
 }
+// Фильтры каталога
+const filterSearch = document.getElementById("filterSearch");
+const filterCategory = document.getElementById("filterCategory");
+const minPrice = document.getElementById("minPrice");
+const maxPrice = document.getElementById("maxPrice");
+const sortProducts = document.getElementById("sortProducts");
+const resetFilters = document.getElementById("resetFilters");
+const filterCount = document.getElementById("filterCount");
+
+function applyProductFilters() {
+    // Используй массив products из своего существующего catalog.js
+    if (!Array.isArray(products)) return;
+
+    const search = filterSearch.value.trim().toLowerCase();
+    const category = filterCategory.value;
+    const min = minPrice.value === "" ? 0 : Number(minPrice.value);
+    const max = maxPrice.value === "" ? Infinity : Number(maxPrice.value);
+    const sort = sortProducts.value;
+
+    let filtered = products.filter(product => {
+        const name = `${product.brand || ""} ${product.model || ""} ${product.name || ""}`
+            .toLowerCase();
+
+        const price = Number(product.price) || 0;
+
+        // Определяем категорию по названию товара
+        const categoryText = `${product.category?.name || product.category || ""} ${name}`
+            .toLowerCase();
+
+        let matchesCategory = true;
+
+        if (category === "computer") {
+            matchesCategory = /computer|laptop|pc|ноутбук|компьютер|пк/i.test(categoryText);
+        } else if (category === "phone") {
+            matchesCategory = /phone|smartphone|mobile|телефон|смартфон/i.test(categoryText);
+        } else if (category === "accessory") {
+            matchesCategory = /accessory|аксессуар|headphone|наушник|keyboard|клавиатура|mouse|мышь/i.test(categoryText);
+        }
+
+        return name.includes(search)
+            && matchesCategory
+            && price >= min
+            && price <= max;
+    });
+
+    if (sort === "cheap") {
+        filtered.sort((a, b) => Number(a.price) - Number(b.price));
+    } else if (sort === "expensive") {
+        filtered.sort((a, b) => Number(b.price) - Number(a.price));
+    } else if (sort === "name") {
+        filtered.sort((a, b) =>
+            `${a.brand || ""} ${a.model || a.name || ""}`.localeCompare(
+                `${b.brand || ""} ${b.model || b.name || ""}`
+            )
+        );
+    }
+
+    filterCount.textContent = `Найдено товаров: ${filtered.length}`;
+
+    // Вызываем функцию отображения из твоего каталога.
+    // Здесь renderProducts должна принимать массив товаров.
+    renderProducts(filtered);
+}
+
+[
+    filterSearch,
+    filterCategory,
+    minPrice,
+    maxPrice,
+    sortProducts
+].forEach(element => {
+    element.addEventListener("input", applyProductFilters);
+    element.addEventListener("change", applyProductFilters);
+});
+
+resetFilters.addEventListener("click", () => {
+    filterSearch.value = "";
+    filterCategory.value = "";
+    minPrice.value = "";
+    maxPrice.value = "";
+    sortProducts.value = "";
+    applyProductFilters();
+});
