@@ -6,32 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Главная</title>
     <link rel="stylesheet" href="script.css">
+    <link rel="stylesheet" href="navbar.css">
 </head>
 
 <body>
 
-<header class="header">
-  <div class="header__inner">
-    <a href="index.html" class="logo">LOGO<span>.</span></a>
-<
-    <nav class="nav">
-      <a href="index.html" class="nav__link active">Главная</a>
-      <a href="catalog.html" class="nav__link">Каталог</a>
-      <a href="about.html" class="nav__link">About</a>
-      <a href="contact.html" class="nav__link">Контакт</a>
-      <a href="manage-products.html" class="nav__link">
-        Управление товарами
-      </a>
-    </nav>
-
-    <div class="header__actions">
-      <a href="cart.html" class="cart-link">🛒 Корзина</a>
-      <a href="account.html" class="account-link" id="accountLink">
-        👤 Аккаунт
-      </a>
-    </div>
-  </div>
-</header>
+<header class="site-header" id="siteHeader"></header>
 
 <main>
 
@@ -44,15 +24,12 @@
 
     <section class="section" id="catalog">
         <h1>Самые популярные товары</h1>
-<a href="manage-products.html" class="nav_link">
-    Управление товарами
-</a>
-        <div class="container">
-            <div class="products" id="products">
-     <input type="text" placeholder="search products" id="search" oninput="searchProducts()">
-     <button class="chip" onclick="sortByPrice()">Сортировка</button>
-      <button onclick="loadProducts()">Сбросить фильтр</button>
 
+        <div class="container">
+      <input type="text" placeholder="search products" id="search" oninput="searchProducts()">
+      <button class="chip" onclick="sortByPrice()">Сортировка</button>
+      <button onclick="loadProducts()">Сбросить фильтр</button>
+            <div class="products" id="products">
             </div>
         </div>
     </section>
@@ -66,6 +43,8 @@
 </footer>
 
 <script src="script.js"></script>
+<script src="navbar.js"></script>
+<script src="cart.js"></script>
 
 </body>
 </html>

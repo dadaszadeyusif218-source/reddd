@@ -7,22 +7,16 @@
 
     <link rel="stylesheet" href="script.css">
     <link rel="stylesheet" href="account.css">
+    <link rel="stylesheet" href="navbar.css">
 </head>
 <body class="account-page" data-protected>
+    <header class="site-header" id="siteHeader"></header>
 
     <main class="account">
         <a class="account-logo" href="index.html">LOGO</a>
 
         <h1>Мой аккаунт</h1>
         <p class="account-subtitle">Информация о вашем профиле</p>
-
-        <nav class="account-nav" aria-label="Навигация">
-            <a href="index.html">Главная</a>
-            <a href="catalog.html">Каталог</a>
-            <a href="login.html">Войти</a>
-            <a href="register.html">Регистрация</a>
-            
-        </nav>
 
         <div id="loader" class="loader"
              role="status"
@@ -47,6 +41,7 @@
         </button>
     </main>
 
+    <script src="navbar.js" defer></script>
     <script src="account.js" defer></script>
 </body>
 </html>

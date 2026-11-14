@@ -2,17 +2,8 @@
 const API_URL = "http://195.26.245.5:9505/api";
 const id = new URLSearchParams(location.search).get("id");
 
-const reviewsKey = "logoStoreReviews";
 const productBox = document.getElementById("product");
 const reviewsBox = document.getElementById("reviews");
-
-function getReviews() {
-    try {
-        return JSON.parse(localStorage.getItem(reviewsKey) || "{}");
-    } catch {
-        return {};
-    }
-}
 
 function escapeHTML(value) {
     return String(value ?? "").replace(/[&<>"']/g, char => ({
@@ -45,9 +36,20 @@ async function loadProduct() {
                 <p class="muted">Информация о товаре</p>
                 <h1>${escapeHTML(product.brand)} ${escapeHTML(product.model)}</h1>
                 <p class="price">$${Number(product.price || 0).toFixed(2)}</p>
+                ${product.averageRating != null
+                    ? `<p>Рейтинг: ${Number(product.averageRating).toFixed(1)} / 5</p>`
+                    : ""}
                 <p>${escapeHTML(product.description || "Описание пока отсутствует.")}</p>
+                <button class="add-cart-btn" id="addProductToCart" type="button">В корзину</button>
             </div>
         `;
+
+        document.getElementById("addProductToCart").addEventListener("click", event => {
+            if (typeof window.addToCart === "function") {
+                window.addToCart(product);
+                event.currentTarget.textContent = "Добавлено";
+            }
+        });
 
         const breadcrumb = document.getElementById("breadcrumbProduct");
         if (breadcrumb) breadcrumb.textContent = `${product.brand || ""} ${product.model || ""}`;
@@ -62,17 +64,50 @@ async function loadProduct() {
 
 function renderReviews() {
     if (!reviewsBox) return;
+    const token = localStorage.getItem("token");
+    if (!token) {
+        reviewsBox.innerHTML = '<p><a href="login.html">Войдите</a>, чтобы просматривать и оставлять отзывы.</p>';
+        return;
+    }
 
-    const allReviews = getReviews();
-    const reviews = allReviews[String(id)] || [];
+    loadReviews(token);
+}
 
+async function loadReviews(token) {
+    reviewsBox.innerHTML = "<p>Загружаем отзывы...</p>";
+    try {
+        const query = new URLSearchParams({ page: "0", size: "20" });
+        const response = await fetch(
+            `${API_URL}/reviews/product/${encodeURIComponent(id)}?${query}`,
+            { headers: { Authorization: `Bearer ${token}`, Accept: "application/json" } }
+        );
+        if (response.status === 401 || response.status === 403) {
+            localStorage.removeItem("token");
+            reviewsBox.innerHTML = '<p>Сессия завершилась. <a href="login.html">Войдите снова</a>, чтобы просматривать отзывы.</p>';
+            return;
+        }
+        if (!response.ok) throw new Error(`Ошибка загрузки отзывов: ${response.status}`);
+
+        const result = await response.json();
+        const page = result?.body ?? result?.data ?? result;
+        const reviews = Array.isArray(page) ? page : page?.content || page?.items || [];
+        renderReviewContent(reviews, token);
+    } catch (error) {
+        console.error(error);
+        reviewsBox.innerHTML = `<p>${escapeHTML(error.message || "Не удалось загрузить отзывы.")}</p>`;
+    }
+}
+
+function renderReviewContent(reviews, token) {
     reviewsBox.innerHTML = `
         <div class="review-form">
             <h3>Оставить отзыв</h3>
             <form id="reviewForm">
-                <label for="reviewName">Твоё имя</label>
-                <input id="reviewName" maxlength="50"
-                       placeholder="Например, Alex" required>
+                <label for="reviewTitle">Заголовок</label>
+                <input id="reviewTitle" maxlength="120" required>
+
+                <label for="reviewComment">Текст отзыва</label>
+                <textarea id="reviewComment" maxlength="1000" required></textarea>
 
                 <label for="reviewRating">Оценка</label>
                 <select id="reviewRating" required>
@@ -83,50 +118,67 @@ function renderReviews() {
                     <option value="1">★☆☆☆☆ — Очень плохо</option>
                 </select>
 
-                <label for="reviewText">Твой отзыв</label>
-                <textarea id="reviewText" maxlength="1000"
-                          placeholder="Расскажи о товаре..." required></textarea>
-
                 <button type="submit">Опубликовать отзыв</button>
+                <p id="reviewMessage" role="status"></p>
             </form>
         </div>
 
         <div class="reviews-list">
             <h3>Отзывы (${reviews.length})</h3>
-            ${reviews.length ? reviews.slice().reverse().map(review => `
+            ${reviews.length ? reviews.map(review => `
                 <article class="review-card">
-                    <div class="review-heading">
-                        <strong>${escapeHTML(review.name)}</strong>
-                        <span class="review-stars">${"★".repeat(review.rating)}${"☆".repeat(5 - review.rating)}</span>
-                    </div>
-                    <p>${escapeHTML(review.text)}</p>
-                    <small>${escapeHTML(review.date)}</small>
+                    <strong>${escapeHTML(review.title || "Отзыв")}</strong>
+                    <p>${escapeHTML(review.comment)}</p>
                 </article>
-            `).join("") : "<p>Пока нет отзывов. Будь первым!</p>"}
+            `).join("") : "<p>Пока отзывов нет.</p>"}
         </div>
     `;
 
-    document.getElementById("reviewForm").addEventListener("submit", event => {
+    document.getElementById("reviewForm").addEventListener("submit", async event => {
         event.preventDefault();
-
-        const name = document.getElementById("reviewName").value.trim();
-        const text = document.getElementById("reviewText").value.trim();
+        const message = document.getElementById("reviewMessage");
+        const title = document.getElementById("reviewTitle").value.trim();
+        const comment = document.getElementById("reviewComment").value.trim();
         const rating = Number(document.getElementById("reviewRating").value);
+        if (!title || !comment) return;
 
-        if (!name || !text || rating < 1 || rating > 5) return;
+        message.textContent = "Отправка...";
+        try {
+            const headers = {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+                Accept: "application/json"
+            };
+            const response = await fetch(`${API_URL}/reviews`, {
+                method: "POST",
+                headers,
+                body: JSON.stringify({ title, comment, productId: Number(id) })
+            });
+            if (response.status === 401 || response.status === 403) {
+                localStorage.removeItem("token");
+                throw new Error("Сессия завершилась. Войдите снова.");
+            }
+            if (!response.ok) throw new Error(`Ошибка публикации: ${response.status}`);
 
-        const data = getReviews();
-        if (!Array.isArray(data[String(id)])) data[String(id)] = [];
+            let ratingSaved = true;
+            try {
+                const ratingResponse = await fetch(`${API_URL}/ratings`, {
+                    method: "POST",
+                    headers,
+                    body: JSON.stringify({ rating, productId: Number(id) })
+                });
+                ratingSaved = ratingResponse.ok;
+            } catch {
+                ratingSaved = false;
+            }
 
-        data[String(id)].push({
-            name,
-            text,
-            rating,
-            date: new Date().toLocaleDateString("ru-RU")
-        });
-
-        localStorage.setItem(reviewsKey, JSON.stringify(data));
-        renderReviews();
+            await loadReviews(token);
+            if (!ratingSaved) {
+                message.textContent = "Отзыв опубликован, но оценку сохранить не удалось.";
+            }
+        } catch (error) {
+            message.textContent = error.message || "Не удалось опубликовать отзыв.";
+        }
     });
 }
 

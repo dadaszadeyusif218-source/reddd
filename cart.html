@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#f4f6f2">
+    <title>Корзина — LOGO</title>
+    <link rel="stylesheet" href="script.css">
+    <link rel="stylesheet" href="navbar.css">
+    <link rel="stylesheet" href="cart.css">
+</head>
+<body>
+    <header class="site-header" id="siteHeader"></header>
+
+    <main class="container cart-page">
+        <div class="cart-page__heading">
+            <p class="cart-kicker">ВАШ ВЫБОР</p>
+            <h1>Корзина</h1>
+            <p id="cartItemCount" class="cart-page__count">0 товаров</p>
+        </div>
+
+        <div class="cart-layout">
+            <section id="cartItems" class="cart-items" aria-live="polite"></section>
+
+            <aside class="cart-summary">
+                <h2>Итого</h2>
+                <div class="cart-summary__row">
+                    <span>Сумма товаров</span>
+                    <strong id="cartTotal">$0.00</strong>
+                </div>
+                <button id="cartCheckout" class="cart-checkout" type="button" disabled>
+                    Продолжить оформление
+                </button>
+                <button id="clearCart" class="cart-clear" type="button">
+                    Очистить корзину
+                </button>
+                <p id="checkoutMessage" class="cart-summary__note" role="status"></p>
+                <p class="cart-summary__note">Оформление заказа станет доступно после подключения безопасной оплаты.</p>
+            </aside>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">© 2026 LOGO STORE</div>
+    </footer>
+
+    <script src="navbar.js"></script>
+    <script src="cart.js"></script>
+</body>
+</html>

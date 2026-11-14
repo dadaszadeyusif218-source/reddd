@@ -7,25 +7,12 @@
     <title>Document</title>
     <link rel="stylesheet" href="script.css">
     <link rel="stylesheet" href="auth.css">
+    <link rel="stylesheet" href="navbar.css">
 
 </head>
 
 <body>
-    <header class="header">
-        <div class="container header_inner">
-            <a href="index.html" class="logo">LOGO</a>
-            <nav class="nav">
-                <a href="index.html" class="nav_link">главная</a>
-                <a href="catalog.html" class="nav_link">каталог</a>
-                
-                 <a href="login.html" class="nav_link">войти</a>
-             
-            </nav>
-            <div class="header_action">
-                <a href="#cart" class="cart-link">корзина</a>
-            </div>
-        </div>
-    </header>
+    <header class="site-header" id="siteHeader"></header>
 
     <main class="auth">
         <form class="form" onsubmit="register(event)">
@@ -42,6 +29,7 @@
         </form>
     </main>
     <script src="register.js"></script>
+    <script src="navbar.js"></script>
     <form id="registerForm">
   
 

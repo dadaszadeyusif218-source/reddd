@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Контакты — LOGO</title>
+    <link rel="stylesheet" href="script.css">
+    <link rel="stylesheet" href="navbar.css">
+    <link rel="stylesheet" href="contact-page.css">
+</head>
+<body class="contact-body">
+<header class="site-header" id="siteHeader"></header>
+<main class="container contact-page">
+    <section class="contact-intro">
+        <p class="contact-kicker">LOGO STORE / ПОДДЕРЖКА</p>
+        <h1>Есть вопрос?<br><span>Давайте разберёмся.</span></h1>
+        <p>Опишите вопрос по заказу, товару или работе магазина. Мы подготовим письмо в вашем почтовом приложении.</p>
+    </section>
+
+    <section class="contact-layout">
+        <form id="contactForm" class="contact-form">
+            <h2>Написать нам</h2>
+            <label for="contactRecipient">Email магазина</label>
+            <input id="contactRecipient" type="email" autocomplete="email" placeholder="support@ваш-магазин.ru" required>
+
+            <label for="contactName">Ваше имя</label>
+            <input id="contactName" type="text" autocomplete="name" maxlength="80" required>
+
+            <label for="contactEmail">Ваш email</label>
+            <input id="contactEmail" type="email" autocomplete="email" required>
+
+            <label for="contactTopic">Тема обращения</label>
+            <select id="contactTopic" required>
+                <option value="Заказ">Вопрос по заказу</option>
+                <option value="Товар">Вопрос о товаре</option>
+                <option value="Другое">Другое</option>
+            </select>
+
+            <label for="contactMessage">Сообщение</label>
+            <textarea id="contactMessage" rows="5" maxlength="2000" required></textarea>
+
+            <button type="submit">Подготовить письмо</button>
+            <p id="contactStatus" role="status"></p>
+        </form>
+
+        <aside class="contact-aside">
+            <h2>Перед отправкой</h2>
+            <p>Укажите актуальный email магазина. Он не задан в настройках проекта, поэтому мы не подставляем вымышленный адрес.</p>
+            <p>Если вопрос касается покупки, добавьте в сообщение номер заказа и название товара.</p>
+            <a href="catalog.html">Вернуться в каталог <span>→</span></a>
+        </aside>
+    </section>
+</main>
+<footer class="footer"><div class="container">© 2026 LOGO STORE</div></footer>
+<script src="contact.js"></script>
+<script src="navbar.js"></script>
+</body>
+</html>
